@@ -1,0 +1,13 @@
+3:
+gcc -c transformation.c -o transformation.o
+gcc main.c transformation.o -o main.out
+
+4:
+gcc DariyTopuzov_17.11.2022.c -lm -o result.out
+
+5:
+gcc -c maths.c -o maths.o
+ar rcs libmaths.a maths.o
+gcc mathsmain.c -L /home/dariy/Documents/School/C/17.11.2022 -lmaths -o mathsmain.out
+
+
