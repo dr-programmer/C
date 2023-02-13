@@ -29,12 +29,6 @@ int main()
     }
 
     printf("Avg = %f \n", (sum / markscount));
-    
-    int *p = (int *)malloc(sizeof(int));
-    *p = 7;
-    printf("%d \n", *p);
-
-    free(p);
 
     return 0;
 }
