@@ -54,7 +54,7 @@ void pushfront(LinkedList *list, double value) {
 
 double pop(LinkedList *list, int index) {
     if (index == 0){
-        popfront(list);
+        return popfront(list);
     }
     struct ListNode *prevnode = get(list, index - 1);
     struct ListNode *elementtodelete = prevnode->next;
@@ -88,8 +88,7 @@ void set(LinkedList *list, int index, double value) {
 }
 
 void release(LinkedList *list){
-    while(list->size > 1){
+    while(list->size > 0){
         popback(list);
     }
-    popfront(list);
 }
