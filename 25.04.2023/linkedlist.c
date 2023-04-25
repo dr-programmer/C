@@ -3,7 +3,7 @@
 
 #include "linkedlist.h"
 
-static struct ListNode *createnode(double value) {
+static struct ListNode *createnode(Todo value) {
     struct ListNode *newnode = (struct ListNode *)malloc(sizeof(struct ListNode));
     if (newnode == NULL) {
         printf("Error allocating memory! \n");
@@ -30,7 +30,7 @@ struct ListNode *get(LinkedList *list, int index) {
     return current;
 }
 
-void push(LinkedList *list, int index, double value) {
+void push(LinkedList *list, int index, Todo value) {
     if (index == 0) {
         pushfront(list, value);
         return;
@@ -42,18 +42,18 @@ void push(LinkedList *list, int index, double value) {
     list->size++;
 }
 
-void pushback(LinkedList *list, double value) {
+void pushback(LinkedList *list, Todo value) {
     push(list, list->size, value);
 }
 
-void pushfront(LinkedList *list, double value) {
+void pushfront(LinkedList *list, Todo value) {
     struct ListNode *newnode = createnode(value);
     newnode->next = list->head;
     list->head = newnode;
     list->size++;
 }
 
-double pop(LinkedList *list, int index) {
+Todo pop(LinkedList *list, int index) {
     if (index == 0){
         return popfront(list);
     }
@@ -62,28 +62,28 @@ double pop(LinkedList *list, int index) {
     prevnode->next = prevnode->next->next;
     list->size--;
 
-    double result = elementtodelete->value;
+    Todo result = elementtodelete->value;
     free(elementtodelete);
 
     return result;
 }
 
-double popfront(LinkedList *list) {
+Todo popfront(LinkedList *list) {
     struct ListNode *elementtodelete = list->head;
     list->head = list->head->next;
     list->size--;
 
-    double result = elementtodelete->value;
+    Todo result = elementtodelete->value;
     free(elementtodelete);
 
     return result;
 }
 
-double popback(LinkedList *list) {
+Todo popback(LinkedList *list) {
     return pop(list, list->size - 1);
 }
 
-void set(LinkedList *list, int index, double value) {
+void set(LinkedList *list, int index, Todo value) {
     struct ListNode *node = get(list, index);
     node->value = value;
 }
