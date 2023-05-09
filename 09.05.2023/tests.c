@@ -30,6 +30,8 @@ int main()
     push(&list, 1, 11);
     printlist(&list);
 
+    printf("Previous from index 3: %lf \n", list.head->next->next->next->prev->value);
+
     pushback(&list, 13);
     printlist(&list);
 
@@ -41,12 +43,16 @@ int main()
     printf("Third element: %lf \n", el3);
     printlist(&list);
 
+    printf("Previous from index 2: %lf \n", list.head->next->next->prev->value);
+
     double lastelement = popback(&list);
     printf("Last element: %lf \n", lastelement);
     printlist(&list);
 
     set(&list, 2, 17);
     printlist(&list);
+
+    printf("Previous from index 1: %lf \n", list.head->next->prev->value);
 
     release(&list);
     printlist(&list);

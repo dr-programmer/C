@@ -38,9 +38,9 @@ void push(LinkedList *list, int index, double value) {
     struct ListNode *prevnode = get(list, index - 1);
     struct ListNode *newnode = createnode(value);
     newnode->next = prevnode->next;
+    if(prevnode->next != NULL) prevnode->next->prev = newnode;
     newnode->prev = prevnode;
     prevnode->next = newnode;
-    prevnode->next->prev = newnode;
     list->size++;
 }
 
@@ -64,7 +64,7 @@ double pop(LinkedList *list, int index) {
     struct ListNode *prevnode = get(list, index - 1);
     struct ListNode *elementtodelete = prevnode->next;
     prevnode->next = prevnode->next->next;
-    if(prevnode->next != NULL) prevnode->next->prev = prevnode->next;
+    if(prevnode->next != NULL) prevnode->next->prev = prevnode;
     list->size--;
 
     double result = elementtodelete->value;
