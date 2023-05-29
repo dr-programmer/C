@@ -15,12 +15,12 @@ int main()
     int participantsCount = 0;
     fread(&participantsCount, sizeof(int), 1, file);
 
-    //Participant *participants = (Participant *)calloc(1, sizeof(Participant));
-    Participant participants[3];
+    Participant *participants = (Participant *)calloc(participantsCount, sizeof(Participant));
+    //Participant participants[3];
     fread(participants, sizeof(Participant), participantsCount, file);
     printParticipants(participants, participantsCount);
 
-    //free(participants);
+    free(participants);
     fclose(file);
 
     return 0;
