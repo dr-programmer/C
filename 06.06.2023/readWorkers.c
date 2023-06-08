@@ -17,6 +17,7 @@ int main()
     (director.workers[0]+1)->workers = (struct Employee **)calloc(1, sizeof(struct Employee *));
     *director.workers[0]->workers = (struct Employee *)calloc(3, sizeof(struct Employee));
     *(director.workers[0]+1)->workers = (struct Employee *)calloc(3, sizeof(struct Employee));
+    director.numberOfWorkers = 0;
 
     FILE *file = fopen("file.bin", "rb");
     if(file == NULL) {
@@ -29,6 +30,8 @@ int main()
         fread(&numberOfWorkers, sizeof(int), 1, file);
         printf("Number of workers = %d \n", numberOfWorkers);
         if (numberOfWorkers == 0)break;
+        (director.workers[0]+m)->numberOfWorkers = numberOfWorkers;
+        director.numberOfWorkers++;
         for(int i = 0; i < numberOfWorkers; i++) {
             struct Employee *temp = (director.workers[0]+m)->workers[0];
             fread(&(temp+i)->name, sizeof(char), 100, file);
@@ -61,9 +64,9 @@ int main()
     printf("Director name = %s \n", director.name);
 
     printf("\n%s \n", director.name);
-    for(int i = 0; i < 2; i++) {
+    for(int i = 0; i < director.numberOfWorkers; i++) {
         printf("    %s \n", (director.workers[0]+i)->name);
-        for(int j = 0; j < 3; j++) {
+        for(int j = 0; j < (director.workers[0]+i)->numberOfWorkers; j++) {
             test = (director.workers[0]+i)->workers[0];
             printf("        %s \n", (test+j)->name);
         }
