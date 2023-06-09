@@ -5,18 +5,8 @@
 
 int main()
 {
-    struct Employee workers0[3];
-    struct Employee workers1[3];
-    struct Employee managers[2];
-    managers[0].workers = &workers0;
-    managers[1].workers = &workers1;
     struct Employee director;
     director.workers = (struct Employee **)calloc(1, sizeof(struct Employee *));
-    *director.workers = (struct Employee *)calloc(2, sizeof(struct Employee));
-    director.workers[0]->workers = (struct Employee **)calloc(1, sizeof(struct Employee *));
-    (director.workers[0]+1)->workers = (struct Employee **)calloc(1, sizeof(struct Employee *));
-    *director.workers[0]->workers = (struct Employee *)calloc(3, sizeof(struct Employee));
-    *(director.workers[0]+1)->workers = (struct Employee *)calloc(3, sizeof(struct Employee));
     director.numberOfWorkers = 0;
 
     FILE *file = fopen("file.bin", "rb");
@@ -30,8 +20,11 @@ int main()
         fread(&numberOfWorkers, sizeof(int), 1, file);
         printf("Number of workers = %d \n", numberOfWorkers);
         if (numberOfWorkers == 0)break;
+        *director.workers = (struct Employee *)realloc(*director.workers, (m+1)*sizeof(struct Employee));
+        (director.workers[0]+m)->workers = (struct Employee **)calloc(1, sizeof(struct Employee *));
         (director.workers[0]+m)->numberOfWorkers = numberOfWorkers;
         director.numberOfWorkers++;
+        *(director.workers[0]+m)->workers = (struct Employee *)calloc(numberOfWorkers, sizeof(struct Employee));
         for(int i = 0; i < numberOfWorkers; i++) {
             struct Employee *temp = (director.workers[0]+m)->workers[0];
             fread(&(temp+i)->name, sizeof(char), 100, file);
@@ -39,24 +32,6 @@ int main()
         fread(&(director.workers[0]+m)->name, sizeof(char), 100, file);
     }
     fread(&director.name, sizeof(char), 100, file);
-/*
-    fread(&numberOfWorkers, sizeof(int), 1, file);
-    printf("Number of workers = %d \n", numberOfWorkers);
-    for(int i = 0; i < numberOfWorkers; i++) {
-        fread(&workers1[i].name, sizeof(char), 100, file);
-    }
-    fread(&managers[1].name, sizeof(char), 100, file);
-    
-    fread(&numberOfWorkers, sizeof(int), 1, file);
-    printf("Number of workers = %d \n", numberOfWorkers);
-    if(numberOfWorkers == 0) {
-        fread(&director.name, sizeof(char), 100, file);
-    }
-
-    printf("\nWorker name = %s \n", workers0[1].name);
-    printf("Manager name = %s \n", managers[0].name);
-    printf("Director name = %s \n", director.name);
-    */
 
     struct Employee *test = director.workers[0]->workers[0];
     printf("\nWorker name = %s \n", (test+1)->name);
